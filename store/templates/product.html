@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+{{ product.description }}
+{% endblock %}
+
+{% block title %}
+{{ product.name.split|join:'-' }}
+{% endblock %}
+
+{% block content %}
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+			{% if product %}
+				<!-- Product main img -->
+				<div class="col-md-5 col-md-push-2 pd-img">
+					<div id="product-main-img">
+						<div class="product-preview">
+							<img src="{{ product.imageURL }}" alt="{{ product.name.split|join:'-' }}">
+						</div>
+					</div>
+				</div>
+				<!-- /Product main img -->
+
+				<!-- Product thumb imgs -->
+				<div class="col-md-2  col-md-pull-5">
+				</div>
+				<!-- /Product thumb imgs -->
+
+				<!-- Product details -->
+				<div class="col-md-5">
+					<div style="direction: rtl;" class="product-details">
+						<h2 class="product-name">{{ product.name }}</h2>
+						<div>
+							<h3 class="product-price">{{ product.price }} <del class="product-old-price">{{ product.old_price }}</del></h3>
+							{% if product.stock %}
+								<span class="product-available">موجود در انبار</span>
+							{% else %}
+								<span class="product-available">ناموجود</span>
+							{% endif %}
+							
+						</div>
+						<p style="text-align: justify;
+							text-justify: inter-word;">{{ product.description }}</p>
+
+						<div class="product-options">
+							
+						</div>
+
+						<div class="add-to-cart">
+							<div class="qty-label">
+								تعداد
+								<div class="input-number">
+									<input type="number" value="{{ qt }}" id="quantity">
+									<span data-product="{{ product.id }}" data-action="add" id="qtyup" class="qty-up">+</span>
+									<span data-product="{{ product.id }}" data-action="del" id="qtydown" class="qty-down">-</span>
+								</div>
+							</div>
+							<br>
+							<br>
+							{% if already %}
+							<button data-product="{{ product.id }}" id="del-cart" class="add-to-cart-btn"><i class="fa fa-remove"></i> حذف از سبد خرید</button>
+							{% else %}
+							<button data-product="{{ product.id }}" id="add-cart" class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> افزودن به سبد خرید</button>
+							{% endif %}
+							{% if favorite %}
+							<i data-product="{{ product.id }}" id="del-favor" style="margin-right: 20px; cursor: pointer; font-size: 25px; color: red;" class="fa fa-heart"></i>
+							{% else %}
+							<i data-product="{{ product.id }}" id="add-favor" style="margin-right: 20px; cursor: pointer; font-size: 25px; color: red;" class="fa fa-heart-o"></i>
+							{% endif %}
+							
+						</div>
+					</div>
+				</div>
+				<!-- /Product details -->
+			{% else %}
+				<h3 style="direction: rtl;" class="title">محصولی پیدا نشد!</h3>
+			{% endif %}
+			
+		</div>
+		<!-- /row -->
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+{% endblock %}

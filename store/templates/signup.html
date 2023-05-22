@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+سایت فروشگاهی علی ، بهترین سایت خرید محصولات غذایی با کیفیت بالا و قیمت مناسب برای شما مشتریان عزیز ، با هزینه پیک رایگان
+{% endblock %}
+
+{% block title %}
+ساخت حساب
+{% endblock %}
+
+{% block content %}
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+            
+            <div class="col-md-7">
+            </div>
+
+            <div style="direction: rtl; margin-top: 10px;" class="col-md-4 billing-details">
+                <div class="section-title">
+                    <h3 class="title">ساخت حساب</h3>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for f in form %}
+                        <div class="form-group">
+                            {{ f }}
+                        </div>
+                    {% endfor %}
+                    <div class="d-flex mx-1 mb-3 mb-lg-4">
+                        <button type="submit" class="primary-btn">ثبت نام</button>
+                    </div>
+                    <br>                  
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-danger">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

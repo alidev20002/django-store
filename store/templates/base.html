@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+	{% load static %}
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content="{% block desc %} {% endblock %}">
+		 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+		 <title>
+			{% block title %}
+			{% endblock %}
+		 </title>
+
+		 <!-- Fav Icon -->
+		 <link rel="icon" type="image/x-icon" href="{% static 'img/alilogo.png' %}">
+
+		 <!-- Google font -->
+		 <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+ 
+		 <!-- Bootstrap -->
+		 <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+ 
+		 <!-- Slick -->
+		 <link type="text/css" rel="stylesheet" href="{% static 'css/slick.css' %}"/>
+		 <link type="text/css" rel="stylesheet" href="{% static 'css/slick-theme.css' %}"/>
+ 
+		 <!-- nouislider -->
+		 <link type="text/css" rel="stylesheet" href="{% static 'css/nouislider.min.css' %}"/>
+ 
+		 <!-- Font Awesome Icon -->
+		 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+ 
+		 <!-- Custom stlylesheet -->
+		 <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+ 
+		 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+		 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		 <!--[if lt IE 9]>
+		   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+		   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+		 <![endif]-->
+ 
+	 </head>
+	 <body>
+		 <!-- HEADER -->
+		 <header>
+			 <!-- TOP HEADER -->
+			 <div id="top-header">
+				 <div class="container hlinks">
+					 <ul class="header-links p-right">
+						 <li><a href="tel:+989930687786"><i class="fa fa-phone"></i> +989930687786</a></li>
+						 <li><a href="mailto:alitigercr71381@gmail.com"><i class="fa fa-envelope-o"></i> alitigercr71381@gmail.com</a></li>
+						 <!-- <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li> -->
+					 </ul>
+					 {% if request.user.is_authenticated %}
+						<ul class="header-links p-left">
+							<li style="cursor: pointer;"><a>{{ request.user.username }}</a></li>
+						</ul>
+					 {% else %}
+						<ul class="header-links">
+							<li><a href="{% url 'login' %}"><i class="fa fa-sign-in"></i> ورود</a></li>
+							<li><a href="{% url 'signup' %}"><i class="fa fa-user-o"></i> ثبت نام</a></li>
+						</ul>
+					 {% endif %}
+					 
+				 </div>
+			 </div>
+			 <!-- /TOP HEADER -->
+ 
+			 <!-- MAIN HEADER -->
+			 <div id="header">
+				 <!-- container -->
+				 <div class="container">
+					 <!-- row -->
+					 <div class="row">
+ 
+						 <!-- ACCOUNT -->
+						 <div class="col-md-3 clearfix">
+							 <div class="header-ctn">
+								 <!-- Wishlist -->
+								 <div class="dropdown">
+									 <a href="{% url 'favorite' %}" style="cursor: pointer;">
+										 <i class="fa fa-heart-o"></i>
+										 <span>علاقه مندی ها</span>
+										 <div id="favor-qty" class="qty">{{ favorites.count }}</div>
+									 </a>
+								 </div>
+								 <!-- /Wishlist -->
+ 
+								 <!-- Cart -->
+								 <div class="dropdown">
+									 <a  href="{% url 'cart' %}" style="cursor: pointer;">
+										 <i class="fa fa-shopping-cart"></i>
+										 <span>سبد خرید</span>
+										 <div id="cart-qty" class="qty">{{ order.get_cart_items }}</div>
+									 </a>
+								 </div>
+								 <!-- /Cart -->
+ 
+								 <!-- Menu Toogle -->
+								 <div class="menu-toggle">
+									 <a href="#">
+										 <i class="fa fa-bars"></i>
+										 <span>منو</span>
+									 </a>
+								 </div>
+								 <!-- /Menu Toogle -->
+							 </div>
+						 </div>
+						 <!-- /ACCOUNT -->
+ 
+						 <!-- SEARCH BAR -->
+						 <div class="col-md-6">
+							 <div class="header-search">
+								 <form style="direction: rtl; display: flex;" method="GET" action="{% url 'main'%}">
+									 <select style="border-radius: 0px 40px 40px 0px;" class="input-select" name="category">
+										 <option value="0">همه دسته ها</option>
+										 {% for category in categories %}
+										 	<option value="{{ category.id }}">{{ category.name }}</option>
+										 {% endfor %}
+									 </select>
+									 <input style="text-align: right; margin-right: 0px; width: 80%;" class="input" placeholder="نام محصول" name="name">
+									 <button style="border-radius: 40px 0px 0px 40px;" class="search-btn" type="submit">جستجو</button>
+								 </form>
+							 </div>
+						 </div>
+						 <!-- /SEARCH BAR -->
+ 
+						 <!-- LOGO -->
+						 <div class="col-md-3">
+							 <div class="header-logo">
+								 <a href="" class="logo">
+									 <img style="width: 80px;" src="{% static 'img/alilogo.png' %}" alt="logo">
+								 </a>
+							 </div>
+						 </div>
+						 <!-- /LOGO -->
+ 
+					 </div>
+					 <!-- row -->
+				 </div>
+				 <!-- container -->
+			 </div>
+			 <!-- /MAIN HEADER -->
+		 </header>
+		 <!-- /HEADER -->
+ 
+		 <!-- NAVIGATION -->
+		 <nav id="navigation">
+			 <!-- container -->
+			 <div class="container">
+				 <!-- responsive-nav -->
+				 <div id="responsive-nav">
+					 <!-- NAV -->
+					 <ul class="main-nav">
+						<li><a href="{% url 'main' %}">خانه</a></li>
+						{% for category in categories %}
+							<li><a href="{% url 'category' category.name %}">{{ category.name }}</a></li>
+						{% endfor %}
+					 </ul>
+					 <!-- /NAV -->
+				 </div>
+				 <!-- /responsive-nav -->
+			 </div>
+			 <!-- /container -->
+		 </nav>
+		 <!-- /NAVIGATION -->
+
+		{% block content %}
+		{% endblock %}
+
+		<!-- NEWSLETTER -->
+		<div id="newsletter" class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="newsletter">
+							<p>ما را در شبکه های اجتماعی دنبال کنید</p>
+							<ul class="newsletter-follow">
+								<li>
+									<a href="#"><i class="fa fa-facebook"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-twitter"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-instagram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-pinterest"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-telegram"></i></a>
+								</li>
+								<li>
+									<a href="#"><i class="fa fa-whatsapp"></i></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /NEWSLETTER -->
+
+		<!-- FOOTER -->
+		<footer id="footer">
+			<!-- top footer -->
+			<div class="section">
+				<!-- container -->
+				<div class="container">
+					<!-- row -->
+					<div style="direction: rtl;" class="row">
+						<div style="float: right;" class="col-md-4 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">درباره ما</h3>
+								<p style="text-align: justify;
+								text-justify: inter-word;">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه و متخصصان را می طلبد، تا با نرم افزارها شناخت بیشتری را برای طراحان رایانه ای علی الخصوص طراحان خلاقی، و فرهنگ پیشرو در زبان فارسی ایجاد کرد.</p>
+								<ul style="direction: ltr;" class="footer-links">
+									<li><a href="#"><i class="fa fa-phone"></i>+989930687786</a></li>
+									<li><a href="#"><i class="fa fa-envelope-o"></i>alitigercr71381@gmail.com</a></li>
+								</ul>
+							</div>
+						</div>
+
+						<div style="float: right;" class="col-md-4 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">دسته ها</h3>
+								<ul class="footer-links">
+									<li><a href="#top-sell">پر فروش ها</a></li>
+									{% for category in categories %}
+										<li><a href="{% url 'category' category.name %}">{{ category.name }}</a></li>
+									{% endfor %}
+								</ul>
+							</div>
+						</div>
+
+						<div class="clearfix visible-xs"></div>
+
+						<div style="float: right;" class="col-md-4 col-xs-6">
+							<div class="footer">
+								<h3 class="footer-title">خدمات</h3>
+								<ul class="footer-links">
+									<li><a href="{% url 'main' %}">خانه</a></li>
+									<li><a href="{% url 'checkout' %}">پرداخت</a></li>
+									<li><a href="{% url 'signup' %}">ثبت نام</a></li>
+									<li><a href="{% url 'login' %}">ورود</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<!-- /row -->
+				</div>
+				<!-- /container -->
+			</div>
+			<!-- /top footer -->
+
+			<!-- bottom footer -->
+			<div id="bottom-footer" class="section">
+				<div class="container">
+					<!-- row -->
+					<div class="row">
+						<div class="col-md-12 text-center">
+							<span class="copyright">
+								<p>Created By AliDev, August 2022</p>
+							</span>
+						</div>
+					</div>
+						<!-- /row -->
+				</div>
+				<!-- /container -->
+			</div>
+			<!-- /bottom footer -->
+		</footer>
+		<!-- /FOOTER -->
+
+		<!-- jQuery Plugins -->
+		<script src="{% static 'js/jquery.min.js' %}"></script>
+		<script src="{% static 'js/bootstrap.min.js' %}"></script>
+		<script src="{% static 'js/slick.min.js' %}"></script>
+		<script src="{% static 'js/nouislider.min.js' %}"></script>
+		<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
+		<script src="{% static 'js/main.js' %}"></script>
+		<script src="{% static 'js/scripts.js' %}"></script>
+
+		<script>
+			var user = '{{ request.user }}'
+  
+			function getCookie(name) {
+			  let cookieValue = null;
+			  if (document.cookie && document.cookie !== '') {
+				  const cookies = document.cookie.split(';');
+				  for (let i = 0; i < cookies.length; i++) {
+					  const cookie = cookies[i].trim();
+					  // Does this cookie string begin with the name we want?
+					  if (cookie.substring(0, name.length + 1) === (name + '=')) {
+						  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+						  break;
+					  }
+				  }
+			  }
+			  return cookieValue;
+			}
+			const csrftoken = getCookie('csrftoken');
+		  </script>
+
+	</body>
+</html>

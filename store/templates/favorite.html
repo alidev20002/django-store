@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+سایت فروشگاهی علی ، بهترین سایت خرید محصولات غذایی با کیفیت بالا و قیمت مناسب برای شما مشتریان عزیز ، با هزینه پیک رایگان
+{% endblock %}
+
+{% block title %}
+علاقه مندی ها
+{% endblock %}
+
+{% block content %}
+    <!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- ASIDE -->
+				<!-- <div id="aside" class="col-md-3">
+				</div> -->
+				<!-- /ASIDE -->
+
+				<!-- STORE -->
+				<div id="store" class="col-md-10">
+					<!-- store products -->
+					<div class="row">
+					{% if favorites %}
+						{% for favorite in favorites %}
+							<!-- product -->
+							<div class="col-md-3 col-xs-6">
+								<div class="product">
+									<a style="cursor: pointer;" href="{% url 'product' favorite.product.name.split|join:'-' %}">
+									<div class="product-img">
+										<img src="{{ favorite.product.imageURL }}" alt="{{ favorite.product.name.split|join:'-' }}">
+										<div class="product-label">
+										</div>
+									</div>
+									<div class="product-body">
+                                        <p class="product-category">{{ favorite.product.category }}</p>
+										<h3 class="product-name"><a href="{% url 'product' favorite.product.name.split|join:'-' %}">{{ favorite.product.name }}</a></h3>
+										<h4 class="product-price">{{ favorite.product.price }}</h4>
+									</div>
+									</a>
+								</div>
+							</div>
+							<!-- /product -->
+						{% endfor %}
+					{% else %}
+							<h3 style="direction: rtl;" class="title">محصولی پیدا نشد!</h3>
+					{% endif %}
+					</div>
+					<!-- /store products -->
+				</div>
+				<!-- /STORE -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+{% endblock %}

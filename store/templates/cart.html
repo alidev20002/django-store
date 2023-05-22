@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+سایت فروشگاهی علی ، بهترین سایت خرید محصولات غذایی با کیفیت بالا و قیمت مناسب برای شما مشتریان عزیز ، با هزینه پیک رایگان
+{% endblock %}
+
+{% block title %}
+سبد خرید
+{% endblock %}
+
+{% block content %}
+    <!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- ASIDE -->
+				<div id="aside" class="col-md-3">
+                    <div style="display: flex; flex-direction: column;" class="store-filter clearfix">
+                        <div style="direction: rtl;">
+                            <h4>{{ order.get_cart_items }} محصول انتخاب شده است</small>
+                            <h5>قیمت کل: {{ order.get_cart_total }}</h5> 
+                        </div>
+                        <a class="primary-btn" href="{% url 'checkout'%}">پرداخت</a>
+                    </div>
+				</div>
+				<!-- /ASIDE -->
+
+				<!-- STORE -->
+				<div id="store" class="col-md-9">
+					<!-- store products -->
+					<div class="row">
+					{% if order_items %}
+						{% for order_item in order_items %}
+							<!-- product -->
+							<div class="col-md-3 col-xs-6">
+								<div class="product">
+									<a style="cursor: pointer;" href="{% url 'product' order_item.product.name.split|join:'-' %}">
+									<div class="product-img">
+										<img src="{{ order_item.product.imageURL }}" alt="{{ order_item.product.name.split|join:'-' }}">
+										<div class="product-label">
+										</div>
+									</div>
+									<div class="product-body">
+										<h3 class="product-name"><a href="{% url 'product' order_item.product.name.split|join:'-' %}">{{ order_item.product.name }}</a></h3>
+										<h4 class="product-price">{{ order_item.product.price }}</h4>
+                                        <h4 style="direction: rtl;" class="product-price">{{ order_item.quantity }} عدد</h4>
+									</div>
+									</a>
+								</div>
+							</div>
+							<!-- /product -->
+						{% endfor %}
+					{% else %}
+							<h3 style="direction: rtl;" class="title">محصولی پیدا نشد!</h3>
+					{% endif %}
+					</div>
+					<!-- /store products -->
+				</div>
+				<!-- /STORE -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+{% endblock %}

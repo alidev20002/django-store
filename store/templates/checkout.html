@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+سایت فروشگاهی علی ، بهترین سایت خرید محصولات غذایی با کیفیت بالا و قیمت مناسب برای شما مشتریان عزیز ، با هزینه پیک رایگان
+{% endblock %}
+
+{% block title %}
+پرداخت
+{% endblock %}
+
+{% block content %}
+<!-- SECTION -->
+<div class="section">
+	<!-- container -->
+	<div class="container">
+		<!-- row -->
+		<div class="row">
+
+			<form method="POST">
+				{% csrf_token %}
+				<div style="direction: rtl;" class="col-md-7">
+					<!-- Billing Details -->
+					<div class="billing-details">
+						<div class="section-title">
+							<h3 class="title">اطلاعات مشتری</h3>
+						</div>
+						{% for f in form %}
+							<div class="form-group">
+								{{ f }}
+							</div>
+						{% endfor %}
+					</div>
+					<!-- /Billing Details -->
+				</div>
+				<!-- Order Details -->
+				<div style="direction: rtl;" class="col-md-5 order-details">
+					<div class="section-title text-center">
+						<h3 class="title">سفارش شما</h3>
+					</div>
+					<div class="order-summary">
+						<div class="order-col">
+							<div><strong>نام محصول</strong></div>
+							<div><strong>مجموع</strong></div>
+						</div>
+						<div class="order-products">
+							{% for orderitem in order_items %}
+								<div class="order-col">
+									<div><span>{{ orderitem.quantity }} عدد</span> {{ orderitem.product.name }}</div>
+									<div>{{ orderitem.get_total }}</div>
+								</div>
+							{% endfor %}
+						</div>
+						<div class="order-col">
+							<div>هزینه پیک</div>
+							<div><strong>رایگان</strong></div>
+						</div>
+						<div class="order-col">
+							<div><strong>مجموع نهایی</strong></div>
+							<div><strong class="order-total">{{ order.get_cart_total }}</strong></div>
+						</div>
+					</div>
+					<button style="width: 100%;" type="submit" class="primary-btn order-submit">پرداخت</button>
+				</div>
+				<!-- /Order Details -->
+			</form>
+		</div>
+		<!-- /row -->
+		{% if messages %}
+			{% for message in messages %}
+				<div style="direction: rtl;" class="alert alert-danger">
+					{{ message }}
+				</div>
+			{% endfor %}
+        {% endif %}
+	</div>
+	<!-- /container -->
+</div>
+<!-- /SECTION -->
+{% endblock %}

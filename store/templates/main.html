@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block desc %}
+سایت فروشگاهی علی ، بهترین سایت خرید محصولات غذایی با کیفیت بالا و قیمت مناسب برای شما مشتریان عزیز ، با هزینه پیک رایگان
+{% endblock %}
+
+{% block title %}
+سایت فروشگاهی
+{% endblock %}
+
+{% block content %}
+{% load tags %}
+	<!-- SECTION -->
+	<div class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- ASIDE -->
+				<div id="aside" class="col-md-3">
+				</div>
+				<!-- /ASIDE -->
+
+				<!-- STORE -->
+				<div id="store" class="col-md-9">
+					<!-- store products -->
+					<div class="row">
+					{% if products %}
+						{% for product in products %}
+							<!-- product -->
+							<div class="col-md-4 col-xs-6">
+								<div class="product">
+									<a style="cursor: pointer;" href="{% url 'product' product.name.split|join:'-' %}">
+									<div class="product-img">
+										<img src="{{ product.imageURL }}" alt="{{ product.name.split|join:'-' }}">
+										<div class="product-label">
+										</div>
+									</div>
+									<div class="product-body">
+										<p class="product-category">{{ product.category }}</p>
+										<h3 class="product-name"><a href="{% url 'product' product.name.split|join:'-' %}">{{ product.name }}</a></h3>
+										<h4 class="product-price">{{ product.price }} <del class="product-old-price">{{ product.old_price }}</del></h4>
+									</div>
+									</a>
+								</div>
+							</div>
+							<!-- /product -->
+						{% endfor %}
+					{% else %}
+							<h3 style="direction: rtl;" class="title">محصولی پیدا نشد!</h3>
+					{% endif %}
+					</div>
+					<!-- /store products -->
+
+					<!-- /page number -->
+					{% if products.has_other_pages %}
+					<div style="display: flex; justify-content: center;" class="store-filter clearfix">
+						<ul class="store-pagination">
+							{% if products.has_previous %}
+							<li><a href="?{% url_replace request 'page' products.previous_page_number %}"><i class="fa fa-angle-left"></i></a></li>
+							{% endif %}
+							{% for i in products.paginator.page_range %}
+								{% if products.number == i %}
+								<li class="active">{{ i }}</li>
+								{% else %}
+								<li><a href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+								{% endif %}
+							{% endfor %}
+							{% if products.has_next %}
+							<li><a href="?{% url_replace request 'page' products.next_page_number %}"><i class="fa fa-angle-right"></i></a></li>
+							{% endif %}
+						</ul>
+					</div>
+					{% endif %}
+					<!-- /page number -->
+				</div>
+				<!-- /STORE -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+
+	<!-- SECTION -->
+	<div id="top-sell" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h3 class="title">پر فروش ها</h3>
+					</div>
+				</div>
+				<!-- /section title -->
+
+				<!-- Products tab & slick -->
+				<div class="col-md-12">
+					<div class="row">
+						<div class="products-tabs">
+							<!-- tab -->
+							<div id="tab2" class="tab-pane fade in active">
+								<div class="products-slick" data-nav="#slick-nav-2">
+									{% for top in tops %}
+										<!-- product -->
+										<div class="col-md-4 col-xs-6">
+											<div class="product">
+												<a style="cursor: pointer;" href="{% url 'product' top.product.name.split|join:'-' %}">
+												<div class="product-img">
+													<img src="{{ top.product.imageURL }}" alt="{{ top.product.name.split|join:'-' }}">
+													<div class="product-label">
+													</div>
+												</div>
+												<div class="product-body">
+													<p class="product-category">{{ top.product.category }}</p>
+													<h3 class="product-name"><a href="{% url 'product' top.product.name.split|join:'-' %}">{{ top.product.name }}</a></h3>
+													<h4 class="product-price">{{ top.product.price }} <del class="product-old-price">{{ top.product.old_price }}</del></h4>
+												</div>
+												</a>
+											</div>
+										</div>
+										<!-- /product -->
+									{% endfor %}
+								</div>
+							</div>
+							<!-- /tab -->
+						</div>
+					</div>
+				</div>
+				<!-- /Products tab & slick -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+
+	<!-- SECTION -->
+	<div id="top-sell" class="section">
+		<!-- container -->
+		<div class="container">
+			<!-- row -->
+			<div class="row">
+
+				<!-- section title -->
+				<div class="col-md-12">
+					<div class="section-title">
+						<h3 class="title">تخفیف ویژه</h3>
+					</div>
+				</div>
+				<!-- /section title -->
+
+				<!-- Products tab & slick -->
+				<div class="col-md-12">
+					<div class="row">
+						<div class="products-tabs">
+							<!-- tab -->
+							<div id="tab2" class="tab-pane fade in active">
+								<div class="products-slick" data-nav="#slick-nav-2">
+									{% for spacial in spacials %}
+										<!-- product -->
+										<div class="col-md-4 col-xs-6">
+											<div class="product">
+												<a style="cursor: pointer;" href="{% url 'product' spacial.product.name.split|join:'-' %}">
+												<div class="product-img">
+													<img src="{{ spacial.product.imageURL }}" alt="{{ spacial.product.name.split|join:'-' }}">
+													<div class="product-label">
+													</div>
+												</div>
+												<div class="product-body">
+													<p class="product-category">{{ spacial.product.category }}</p>
+													<h3 class="product-name"><a href="{% url 'product' spacial.product.name.split|join:'-' %}">{{ spacial.product.name }}</a></h3>
+													<h4 class="product-price">{{ spacial.product.price }} <del class="product-old-price">{{ spacial.product.old_price }}</del></h4>
+												</div>
+												</a>
+											</div>
+										</div>
+										<!-- /product -->
+									{% endfor %}
+								</div>
+							</div>
+							<!-- /tab -->
+						</div>
+					</div>
+				</div>
+				<!-- /Products tab & slick -->
+			</div>
+			<!-- /row -->
+		</div>
+		<!-- /container -->
+	</div>
+	<!-- /SECTION -->
+{% endblock %}
